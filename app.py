@@ -41,5 +41,19 @@ def autocomplete():
     return jsonify(cities)
 
 
+@app.route('/city-stats', methods=['GET'])
+def city_stats():
+    user_ip = request.remote_addr
+    cities = redis_client.lrange(user_ip, 0, -1)
+    city_count = {}
+    for city in cities:
+        city_name = city.decode('utf-8')
+        if city_name in city_count:
+            city_count[city_name] += 1
+        else:
+            city_count[city_name] = 1
+    return jsonify(city_count)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

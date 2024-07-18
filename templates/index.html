@@ -23,6 +23,8 @@
     {% if error_message %}
     <p>Произошла ошибка: {{ error_message }}</p>
     {% endif %}
+    <button id="show-cities">Показать введённые города</button>
+    <div id="city-stats"></div>
     <script>
         $(function() {
             $("#city").autocomplete({
@@ -39,6 +41,21 @@
                     });
                 },
                 minLength: 2
+            });
+
+            $("#show-cities").click(function() {
+                $.ajax({
+                    url: "/city-stats",
+                    dataType: "json",
+                    success: function(data) {
+                        var html = "<h3>Статистика введённых городов:</h3><ul>";
+                        $.each(data, function(city, count) {
+                            html += "<li>" + city + ": " + count + "</li>";
+                        });
+                        html += "</ul>";
+                        $("#city-stats").html(html);
+                    }
+                });
             });
         });
     </script>
