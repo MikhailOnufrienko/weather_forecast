@@ -8,14 +8,14 @@
 <body>
     <h1>Weather Forecast</h1>
     <form method="post">
-        <input type="text" name="city" placeholder="Enter city name" required>
-        <button type="submit">Get Weather</button>
+        <input type="text" name="city" placeholder="Введите название города" required>
+        <button type="submit">Узнать погоду</button>
     </form>
     <h2>Прогноз погоды для города {{ request.form['city'] | title }}</h2>
-    {% if weather_data %}
+    {% if forecast_data %}
     <p>Температура воздуха в городе {{ request.form['city'] | title }} на ближайший день</br>ожидается
-        от {{ weather_data['min_temp'] }} до {{ weather_data['max_temp'] }} °C.
-        Осадки {{ weather_data['precipitation'] }} мм.</p>
+        от {{ forecast_data['min_temp'] }} до {{ forecast_data['max_temp'] }} °C.
+        Осадки {{ forecast_data['precipitation'] }} мм.</p>
     {% endif %}
     {% if error_message %}
     <p>Произошла ошибка: {{ error_message }}</p>
