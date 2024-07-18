@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Weather Forecast</h1>
+    <form method="post">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+    <h2>Прогноз погоды для города {{ request.form['city'] | title }}</h2>
+    {% if weather_data %}
+    <p>Температура воздуха в городе {{ request.form['city'] | title }} на ближайший день</br>ожидается
+        от {{ weather_data['min_temp'] }} до {{ weather_data['max_temp'] }} °C.
+        Осадки {{ weather_data['precipitation'] }} мм.</p>
+    {% endif %}
+    {% if error_message %}
+    <p>Произошла ошибка: {{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
