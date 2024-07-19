@@ -18,6 +18,7 @@ redis_client = redis.StrictRedis.from_url(redis_url)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """Главный маршрут для просмотра прогноза погоды."""
     if request.method == 'GET':
         return render_template('index.html')
     if request.method == 'POST':
@@ -40,6 +41,7 @@ def index():
 
 @app.route('/autocomplete', methods=['GET'])
 def autocomplete():
+    """Автодополнение при вводе названия города."""
     user_ip = request.remote_addr
     term = request.args.get('term', '').lower()
     cities = redis_client.lrange(user_ip, 0, -1)  # получаем список введенных ранее городов
@@ -49,6 +51,7 @@ def autocomplete():
 
 @app.route('/city-stats', methods=['GET'])
 def city_stats():
+    """Статистика по введенным городам."""
     user_ip = request.remote_addr
     cities = redis_client.lrange(user_ip, 0, -1)
     city_count = {}

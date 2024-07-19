@@ -13,6 +13,7 @@ load_dotenv()
 class ForecastService:    
     @staticmethod
     def get_coordinates(city: str) -> dict:
+        """Получить координаты города, используя сервис Opencage Geodata."""
         try:
             key = os.getenv('OPENCAGE_GEODATA_API_KEY')
             geocoder = OpenCageGeocode(key)
@@ -39,6 +40,7 @@ class ForecastService:
 
     @staticmethod
     def get_forecast(latitude: float, longitude: float) -> dict:
+        """Получить прогноз погоды по координатам города."""
         forecast_data = {}
         ForecastConfig.API_PARAMS['latitude'] = latitude
         ForecastConfig.API_PARAMS['longitude'] = longitude
