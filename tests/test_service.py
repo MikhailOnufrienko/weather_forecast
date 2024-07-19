@@ -1,12 +1,7 @@
-import pytest
-import requests
 import requests_mock
 from service import ForecastService
 from config import ForecastConfig
 
-# @pytest.fixture
-# def mock_env(monkeypatch):
-#     monkeypatch.setenv('OPENCAGE_GEODATA_API_KEY', 'test_api_key')
 
 def test_get_coordinates_success(mocker):
     mocker.patch('opencage.geocoder.OpenCageGeocode.geocode', return_value=[{
@@ -20,12 +15,14 @@ def test_get_coordinates_success(mocker):
     assert result['longitude'] == 13.405
     assert result['formatted_city_name'] == 'Berlin, Germany'
 
+
 def test_get_coordinates_invalid_city(mocker):
     mocker.patch('opencage.geocoder.OpenCageGeocode.geocode', return_value=[])
     
     result = ForecastService.get_coordinates('InvalidCity')
     assert result['success'] is False
     assert 'Попробуйте ввести название реального города' in result['message']
+
 
 def test_get_forecast_success():
     with requests_mock.Mocker() as m:

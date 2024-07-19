@@ -1,13 +1,16 @@
+import os
+
 from flask import Flask
 from flask import jsonify, render_template, request
-from redis import Redis
+import redis
 
 from service import ForecastService
 
 
 app = Flask(__name__)
 
-redis_client = Redis(host='localhost', port=6379, db=0)
+redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+redis_client = redis.StrictRedis.from_url(redis_url)
 
 
 @app.route('/', methods=['GET', 'POST'])
