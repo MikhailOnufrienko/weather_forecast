@@ -1,10 +1,13 @@
 import os
 
+from dotenv import load_dotenv
 from flask import Flask
 from flask import jsonify, render_template, request
 import redis
 
 from service import ForecastService
+
+load_dotenv()
 
 
 app = Flask(__name__)
