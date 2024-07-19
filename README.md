@@ -31,5 +31,5 @@ docker-compose exec web bash
 Запустите тесты:
 
 ```
-pytest /tests
+pytest tests/
 ```
